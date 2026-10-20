@@ -18,7 +18,8 @@ export function JanelaTratamento({ slug, titulo, children }: { slug: string; tit
     const el = popup.current;
     if (!el || !matchMedia("(min-width: 768px)").matches) return;
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const cartao = document.querySelector<HTMLElement>(`[data-cartao="${slug}"]`);
+    // O mesmo cartão pode existir duas vezes (fileira no celular, grade no desktop): usar o visível
+    const cartao = [...document.querySelectorAll<HTMLElement>(`[data-cartao="${slug}"]`)].find((el) => el.getClientRects().length > 0);
     const para = el.getBoundingClientRect();
     if (cartao) {
       const de = cartao.getBoundingClientRect();

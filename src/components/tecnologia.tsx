@@ -15,17 +15,17 @@ export function Tecnologia() {
   return (
     <Tabs.Root value={aba} onValueChange={(v) => setAba(v as string)}>
       <div className="mx-auto max-w-[1240px] px-margem">
-        <Tabs.List className="relative flex w-fit max-w-full gap-1 overflow-x-auto rounded-[8px] border border-linha bg-superficie p-1 [scrollbar-width:none]">
+        <Tabs.List className="relative grid grid-cols-2 gap-1 rounded-[8px] border border-linha bg-superficie p-1 sm:flex sm:w-fit">
           {tecnologias.map((t) => (
             <Tabs.Tab
               key={t.id}
               value={t.id}
-              className="relative z-10 shrink-0 cursor-pointer whitespace-nowrap rounded-botao px-4 py-3 text-[15px] font-medium text-suave transition-colors duration-150 hover:text-tinta data-active:text-white"
+              className="relative z-10 min-h-11 cursor-pointer rounded-botao px-3 py-2.5 text-[15px] font-medium leading-tight text-suave transition-colors duration-150 hover:text-tinta data-active:text-white sm:whitespace-nowrap sm:px-4"
             >
               {t.nome}
             </Tabs.Tab>
           ))}
-          <Tabs.Indicator className="absolute left-0 top-1 h-[calc(100%-8px)] w-(--active-tab-width) translate-x-(--active-tab-left) rounded-botao bg-tinta transition-[translate,width] duration-[260ms] ease-out motion-reduce:transition-none" />
+          <Tabs.Indicator className="absolute left-0 top-0 h-(--active-tab-height) w-(--active-tab-width) translate-x-(--active-tab-left) translate-y-(--active-tab-top) rounded-botao bg-tinta transition-[translate,width,height] duration-[260ms] ease-out motion-reduce:transition-none" />
         </Tabs.List>
       </div>
 

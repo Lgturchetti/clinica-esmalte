@@ -25,7 +25,8 @@ export default function Tratamentos() {
         </p>
       </div>
 
-      <div className="space-y-14 pb-24">
+      {/* Celular: uma fileira deslizante por categoria (como no streaming) */}
+      <div className="space-y-14 pb-24 lg:hidden">
         {fileiras.map((c) => (
           <section key={c.id} aria-labelledby={`cat-${c.id}`}>
             <Fileira
@@ -43,6 +44,17 @@ export default function Tratamentos() {
           </section>
         ))}
       </div>
+
+      {/* Desktop: as categorias são curtas; uma grade única, com a categoria em cada cartão, não deixa vãos */}
+      <ul className="mx-auto hidden max-w-[1240px] grid-cols-4 gap-x-4 gap-y-8 px-margem pb-24 lg:grid">
+        {fileiras.flatMap((c) =>
+          c.itens.map((t) => (
+            <li key={t.slug}>
+              <CartaoTratamento t={t} categoria={c.nome} />
+            </li>
+          )),
+        )}
+      </ul>
     </>
   );
 }

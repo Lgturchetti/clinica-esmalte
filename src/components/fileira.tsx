@@ -33,7 +33,7 @@ export function Fileira({ titulo, subtitulo, children, rotulo }: { titulo?: Reac
           {titulo}
           {subtitulo}
         </div>
-        <div className="hidden gap-2 pointer-fine:flex">
+        <div className="hidden gap-2 md:flex">
           {[-1, 1].map((dir) => (
             <button
               key={dir}

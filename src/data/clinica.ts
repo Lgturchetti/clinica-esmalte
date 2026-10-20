@@ -58,7 +58,7 @@ export const fotoCapa: Foto = {
 export const fotosEspaco: Foto[] = [
   { src: consultorio, alt: "Consultório com cadeira odontológica, bancada e computador" },
   { src: cadeiraLuz, alt: "Cadeira odontológica ao lado de uma janela com luz natural" },
-  { src: consulta, alt: "Dentista mostrando o planejamento à paciente" },
+  { src: limpeza, alt: "Paciente conversando com a dentista no consultório" },
 ];
 
 // Horário de atendimento, para exibir. `dias` usa o nome que aparece na tela;
@@ -114,7 +114,7 @@ export const tratamentos: Tratamento[] = [
     paraQuem: "Dor de dente, dente quebrado, inchaço, restauração que caiu.",
     etapas: ["Chame no WhatsApp", "Atendimento no mesmo dia", "Alívio da dor", "Plano do tratamento"],
     tecnologia: "Radiografia digital, com imagem na hora", duracao: "Atendimento no mesmo dia",
-    foto: { src: consulta, alt: "Dentista conversando com uma paciente na cadeira" },
+    foto: { src: cadeiraLuz, alt: "Cadeira odontológica pronta para o atendimento" },
   },
   {
     slug: "implante", problema: "Dente perdido", nome: "Implante guiado", categoria: "repor", naInicial: true,
@@ -199,7 +199,7 @@ export const tecnologias: Tecnologia[] = [
     id: "escaneamento", nome: "Escaneamento 3D", titulo: "Sem massa na boca",
     texto: "Um scanner do tamanho de uma escova copia seus dentes em 3D em cerca de 2 minutos.",
     era: "Moldeira com massa por 5 minutos, ânsia e gosto ruim.", aqui: "Modelo 3D na tela em 2 minutos.",
-    fotoEra: { src: consulta, alt: "Consulta odontológica tradicional" }, desenho: "arco",
+    fotoEra: { src: protese, alt: "Modelos de gesso feitos a partir de moldagem com massa" }, desenho: "arco",
   },
   {
     id: "planejamento", nome: "Planejamento digital", titulo: "Você vê antes de começar",
@@ -217,7 +217,7 @@ export const tecnologias: Tecnologia[] = [
     id: "coroa", nome: "Coroa em 1 sessão", titulo: "Pronta na mesma consulta",
     texto: "A coroa é desenhada e fresada aqui na clínica enquanto você espera.",
     era: "Provisório, laboratório e uma nova consulta.", aqui: "Uma sessão, sem provisório.",
-    fotoEra: { src: protese, alt: "Modelos de gesso de arcadas dentárias" }, desenho: "coroa",
+    fotoEra: { src: protese, alt: "Modelos de gesso enviados ao laboratório" }, desenho: "coroa",
   },
 ];
 
