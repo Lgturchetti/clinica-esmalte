@@ -88,7 +88,7 @@ export default function Contato() {
                 <Accordion.Header>
                   <Accordion.Trigger className="group flex w-full cursor-pointer items-center justify-between gap-6 py-5 text-left transition-opacity duration-100 active:opacity-60 font-titulo text-[21px] leading-snug tracking-[-0.015em] select-none">
                     {d.pergunta}
-                    <span className="grid size-8 shrink-0 place-items-center rounded-botao border border-linha transition-transform duration-200 ease-in-out group-data-panel-open:rotate-45" aria-hidden="true">
+                    <span className="grid size-8 shrink-0 place-items-center rounded-botao border border-linha transition-transform duration-200 ease-in-out group-data-panel-open:rotate-45 motion-reduce:transition-none" aria-hidden="true">
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                         <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.5" />
                       </svg>
@@ -96,7 +96,7 @@ export default function Contato() {
                   </Accordion.Trigger>
                 </Accordion.Header>
                 {/* Sem animar a altura (só opacidade + deslize curto, na GPU) */}
-                <Accordion.Panel className="pb-6 pr-14 text-suave transition-[opacity,translate] duration-200 ease-out data-ending-style:opacity-0 data-starting-style:-translate-y-1 data-starting-style:opacity-0">
+                <Accordion.Panel className="pb-6 pr-14 text-suave transition-[opacity,translate] duration-200 ease-out motion-reduce:transition-none data-ending-style:opacity-0 data-starting-style:-translate-y-1 data-starting-style:opacity-0">
                   {d.resposta}
                 </Accordion.Panel>
               </Accordion.Item>

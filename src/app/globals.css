@@ -151,7 +151,7 @@
 
 /* Entrada da capa: uma vez, escalonada por --atraso */
 .entra {
-  animation: entra 420ms var(--ease-out) both;
+  animation: entra 360ms var(--ease-out) both;
   animation-delay: var(--atraso, 0ms);
 }
 @keyframes entra {
@@ -203,7 +203,7 @@
   transform: scale(0.98);
 }
 .cartao img {
-  transition: transform 400ms var(--ease-out);
+  transition: transform 300ms var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
   .cartao:hover {

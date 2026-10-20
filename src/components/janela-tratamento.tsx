@@ -30,6 +30,8 @@ export function JanelaTratamento({ slug, titulo, children }: { slug: string; tit
         ],
         { duration: 320, easing: "cubic-bezier(0.32, 0.72, 0, 1)" },
       );
+      // O que viaja é a forma; o conteúdo só aparece quando ela está quase no lugar
+      el.querySelector("[data-conteudo]")?.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 180, delay: 160, easing: "ease-out", fill: "backwards" });
     } else {
       el.animate([{ transform: "scale(0.97)", opacity: 0 }, { transform: "none", opacity: 1 }], { duration: 220, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
     }
@@ -64,7 +66,7 @@ export function JanelaTratamento({ slug, titulo, children }: { slug: string; tit
             </div>
             {/* Puxador do celular */}
             <div className="absolute left-1/2 top-2 z-10 h-1 w-10 -translate-x-1/2 rounded-full bg-white/80 md:hidden" aria-hidden="true" />
-            <Drawer.Content>{children}</Drawer.Content>
+            <Drawer.Content data-conteudo>{children}</Drawer.Content>
           </Drawer.Popup>
         </Drawer.Viewport>
       </Drawer.Portal>

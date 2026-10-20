@@ -61,9 +61,17 @@ function Painel({ t }: { t: TipoTecnologia }) {
 }
 
 function Comparar({ t }: { t: TipoTecnologia }) {
-  const [corte, setCorte] = useState(50);
   const palco = useRef<HTMLDivElement>(null);
+  const aqui = useRef<HTMLDivElement>(null);
+  const divisoria = useRef<HTMLDivElement>(null);
   const mexeu = useRef(false);
+
+  // Posição escrita direto nos elementos (sem re-renderizar o React a cada quadro):
+  // recorte do lado "aqui" e a divisória andando só com transform (GPU).
+  const posicionar = (corte: number) => {
+    if (aqui.current) aqui.current.style.clipPath = `inset(0 0 0 ${corte}%)`;
+    if (divisoria.current) divisoria.current.style.transform = `translateX(${corte}%)`;
+  };
 
   // Dica única quando a comparação aparece na tela: a linha "respira" para mostrar que dá para arrastar.
   // Explicativo, por isso mais lento (1,1s). Cancela se a pessoa mexer antes.
@@ -79,7 +87,7 @@ function Comparar({ t }: { t: TipoTecnologia }) {
         const passo = (agora: number) => {
           if (mexeu.current) return;
           const p = Math.min(1, Math.max(0, (agora - ini) / 1100));
-          setCorte(50 - 14 * Math.sin(p * Math.PI));
+          posicionar(50 - 14 * Math.sin(p * Math.PI));
           if (p < 1) quadro = requestAnimationFrame(passo);
         };
         quadro = requestAnimationFrame(passo);
@@ -94,7 +102,7 @@ function Comparar({ t }: { t: TipoTecnologia }) {
   }, []);
 
   return (
-    <div ref={palco} className="group/palco relative aspect-[4/5] overflow-hidden rounded-botao bg-superficie select-none sm:aspect-[16/10]" style={{ "--corte": `${corte}%` } as React.CSSProperties}>
+    <div ref={palco} className="group/palco relative aspect-[4/5] overflow-hidden rounded-botao bg-superficie select-none sm:aspect-[16/10]">
       {/* Como era: foto em preto e branco */}
       <Image src={t.fotoEra.src} alt={t.fotoEra.alt} placeholder="blur" sizes="(min-width: 1024px) 700px, 100vw" className="absolute inset-0 h-full w-full object-cover brightness-[0.92] contrast-[1.05] grayscale" />
       <p className="absolute left-3 top-3 max-w-[44%] rounded-botao bg-white/92 px-3 py-2 text-[13px] leading-snug">
@@ -104,8 +112,12 @@ function Comparar({ t }: { t: TipoTecnologia }) {
 
       {/* Como é aqui: a ilustração com a luz da tecnologia, recortada pela divisória */}
       <div
-        className="absolute inset-0 grid place-items-center bg-[#f7f8fb] [clip-path:inset(0_0_0_var(--corte))]"
-        style={{ backgroundImage: "radial-gradient(60% 70% at 70% 40%, var(--color-luz-azul), transparent 70%), radial-gradient(40% 50% at 40% 80%, var(--color-luz-pessego), transparent 70%)" }}
+        ref={aqui}
+        className="absolute inset-0 grid place-items-center bg-[#f7f8fb]"
+        style={{
+          clipPath: "inset(0 0 0 50%)",
+          backgroundImage: "radial-gradient(60% 70% at 70% 40%, var(--color-luz-azul), transparent 70%), radial-gradient(40% 50% at 40% 80%, var(--color-luz-pessego), transparent 70%)",
+        }}
       >
         <Ilustracao desenho={t.desenho} legenda={`Ilustração: ${t.aqui}`} />
         <p className="absolute right-3 top-3 max-w-[44%] rounded-botao bg-white/92 px-3 py-2 text-right text-[13px] leading-snug">
@@ -115,10 +127,10 @@ function Comparar({ t }: { t: TipoTecnologia }) {
       </div>
 
       <Slider.Root
-        value={corte}
+        defaultValue={50}
         onValueChange={(v) => {
           mexeu.current = true;
-          setCorte(v as number);
+          posicionar(v as number);
         }}
         min={0}
         max={100}
@@ -139,8 +151,8 @@ function Comparar({ t }: { t: TipoTecnologia }) {
         </Slider.Control>
       </Slider.Root>
 
-      {/* Divisória desenhada: linha branca + círculo, presos à posição da comparação */}
-      <div className="pointer-events-none absolute inset-y-0 left-(--corte)" aria-hidden="true">
+      {/* Divisória desenhada: a caixa ocupa o palco inteiro e anda com translateX (% da própria largura) */}
+      <div ref={divisoria} className="pointer-events-none absolute inset-0 will-change-transform" style={{ transform: "translateX(50%)" }} aria-hidden="true">
         <span className="absolute inset-y-0 -left-px w-0.5 bg-white" />
         <span className="absolute left-0 top-1/2 grid size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-white shadow-[0_2px_10px_rgb(0_0_0/0.15)] group-has-[input:focus-visible]/palco:outline-2 group-has-[input:focus-visible]/palco:outline-offset-2 group-has-[input:focus-visible]/palco:outline-tinta">
           <svg width="20" height="12" viewBox="0 0 20 12" fill="none">
