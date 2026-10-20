@@ -86,7 +86,7 @@ export default function Contato() {
             {duvidas.map((d) => (
               <Accordion.Item key={d.pergunta} className="border-b border-linha">
                 <Accordion.Header>
-                  <Accordion.Trigger className="group flex w-full cursor-pointer items-center justify-between gap-6 py-5 text-left font-titulo text-[21px] leading-snug tracking-[-0.015em] select-none">
+                  <Accordion.Trigger className="group flex w-full cursor-pointer items-center justify-between gap-6 py-5 text-left transition-opacity duration-100 active:opacity-60 font-titulo text-[21px] leading-snug tracking-[-0.015em] select-none">
                     {d.pergunta}
                     <span className="grid size-8 shrink-0 place-items-center rounded-botao border border-linha transition-transform duration-200 ease-in-out group-data-panel-open:rotate-45" aria-hidden="true">
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none">

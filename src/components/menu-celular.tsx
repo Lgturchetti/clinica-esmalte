@@ -35,7 +35,7 @@ export function MenuCelular({ pathname }: { pathname: string }) {
                       <Link
                         href={p.href}
                         aria-current={pathname === p.href ? "page" : undefined}
-                        className="flex min-h-14 items-center font-titulo text-[28px] tracking-[-0.02em] aria-[current=page]:underline aria-[current=page]:decoration-1 aria-[current=page]:underline-offset-8"
+                        className="flex min-h-14 items-center font-titulo text-[28px] transition-opacity duration-100 select-none active:opacity-50 tracking-[-0.02em] aria-[current=page]:underline aria-[current=page]:decoration-1 aria-[current=page]:underline-offset-8"
                       >
                         {p.nome}
                       </Link>

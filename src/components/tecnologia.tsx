@@ -20,7 +20,7 @@ export function Tecnologia() {
             <Tabs.Tab
               key={t.id}
               value={t.id}
-              className="relative z-10 min-h-11 cursor-pointer rounded-botao px-3 py-2.5 text-[15px] font-medium leading-tight text-suave transition-colors duration-150 hover:text-tinta data-active:text-white sm:whitespace-nowrap sm:px-4"
+              className="relative z-10 min-h-11 cursor-pointer select-none rounded-botao px-3 py-2.5 text-[15px] font-medium leading-tight text-suave transition-colors duration-150 hover:text-tinta data-active:text-white sm:whitespace-nowrap sm:px-4"
             >
               {t.nome}
             </Tabs.Tab>
