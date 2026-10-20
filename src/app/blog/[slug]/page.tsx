@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import { clinica, formatarData, posts } from "@/data/clinica";
 
 export function generateStaticParams() {
-  return posts.map((p) => ({ slug: p.slug }));
+  // Com Cache Components a lista não pode ser vazia: sem itens, um endereço provisório (cai no notFound)
+  return posts.length > 0 ? posts.map((p) => ({ slug: p.slug })) : [{ slug: "_" }];
 }
 
 function buscar(slug: string) {

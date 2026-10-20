@@ -7,7 +7,8 @@ import { tratamentos } from "@/data/clinica";
 // Página inteira do tratamento: quem chega pelo Google ou por um link compartilhado.
 // Navegando dentro do site, o mesmo endereço abre a janela por cima (app/@modal).
 export function generateStaticParams() {
-  return tratamentos.map((t) => ({ slug: t.slug }));
+  // Com Cache Components a lista não pode ser vazia: sem itens, um endereço provisório (cai no notFound)
+  return tratamentos.length > 0 ? tratamentos.map((t) => ({ slug: t.slug })) : [{ slug: "_" }];
 }
 
 export async function generateMetadata({ params }: PageProps<"/tratamentos/[slug]">): Promise<Metadata> {

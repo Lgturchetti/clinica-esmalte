@@ -29,7 +29,7 @@ export function Cabecalho() {
       className="sticky top-0 z-30 border-b border-transparent pt-[env(safe-area-inset-top)] transition-[background-color,border-color] duration-200 data-rolou:border-linha data-rolou:bg-white/85 data-rolou:backdrop-blur-md"
     >
       <div className="mx-auto flex h-16 max-w-[1240px] items-center justify-between gap-6 px-margem">
-        <Link href="/" className="font-titulo text-[23px] tracking-[-0.02em]" translate="no" aria-label={`${clinica.nome}, página inicial`}>
+        <Link href="/" className="min-w-0 truncate font-titulo text-[23px] tracking-[-0.02em]" translate="no" aria-label={`${clinica.nome}, página inicial`}>
           {clinica.nomeCurto}
         </Link>
 

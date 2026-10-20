@@ -20,7 +20,7 @@ export type Foto = { src: StaticImageData; alt: string };
 
 export const clinica = {
   nome: "Clínica Esmalte Odontologia",
-  nomeCurto: "Esmalte",
+  nomeCurto: "Esmalte", // cabeçalho: até ~16 caracteres (mais que isso é cortado com "…" no celular)
   descricao:
     "Odontologia digital no centro de Santa Maria: escaneamento 3D sem massa, planejamento na tela e coroa pronta na mesma consulta.",
   url: "https://clinica-esmalte.vercel.app",

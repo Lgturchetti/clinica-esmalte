@@ -5,7 +5,8 @@ import { tratamentos } from "@/data/clinica";
 
 // Rota interceptada: navegando dentro do site, /tratamentos/[slug] abre por cima da página atual.
 export function generateStaticParams() {
-  return tratamentos.map((t) => ({ slug: t.slug }));
+  // Com Cache Components a lista não pode ser vazia: sem itens, um endereço provisório (cai no notFound)
+  return tratamentos.length > 0 ? tratamentos.map((t) => ({ slug: t.slug })) : [{ slug: "_" }];
 }
 
 export default async function JanelaPagina({ params }: PageProps<"/tratamentos/[slug]">) {
