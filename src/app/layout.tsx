@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   },
   description: clinica.descricao,
   openGraph: { siteName: clinica.nome, locale: "pt_BR", type: "website" },
+  // Site de PORTFÓLIO (clínica fictícia): fora do Google para não confundir quem procura dentista de verdade.
+  // Para um cliente real, apagar esta linha.
+  robots: { index: false, follow: false },
 };
 
 export const viewport: Viewport = {
