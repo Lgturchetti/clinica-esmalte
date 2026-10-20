@@ -1,0 +1,261 @@
+@import "tailwindcss";
+
+/*
+ * Clínica Esmalte v2 — identidade "Galeria" (ver DESIGN.md)
+ * Branco, preto e a cor das fotos. A luz azul/pêssego só aparece na tecnologia.
+ */
+@theme {
+  --color-fundo: #ffffff;
+  --color-superficie: #f5f5f4;
+  --color-tinta: #0a0a0a;
+  --color-tinta-hover: #262626;
+  --color-suave: #66666a;
+  --color-linha: rgb(10 10 10 / 0.1);
+  --color-luz-azul: #c9d8ff;
+  --color-luz-pessego: #ffe3d3;
+
+  --radius-botao: 4px;
+  --radius-cartao: 6px;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-gaveta: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --shadow-flutua: 0 1px 2px rgb(10 10 10 / 0.06), 0 24px 48px -16px rgb(10 10 10 / 0.25);
+}
+
+@theme inline {
+  --font-titulo: var(--font-hedvig);
+  --font-sans: var(--font-onest);
+}
+
+:root {
+  --altura-cabecalho: 65px; /* 64px + 1px da borda */
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  /* Âncoras param abaixo do cabeçalho fixo. NÃO usar scroll-padding no <html>: o Next usa esse
+     valor para decidir se a página nova está visível e abriria a página rolada (lição da v1). */
+  [id] {
+    scroll-margin-top: calc(var(--altura-cabecalho) + env(safe-area-inset-top) + 1rem);
+  }
+  /* Ao trocar de página, o Next rola até o primeiro bloco da página nova; a folga evita que ele
+     fique atrás do cabeçalho fixo. */
+  #conteudo > * {
+    scroll-margin-top: calc(var(--altura-cabecalho) + env(safe-area-inset-top));
+  }
+
+  body {
+    background: var(--color-fundo);
+    color: var(--color-tinta);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-titulo);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+  p,
+  li {
+    text-wrap: pretty;
+  }
+
+  a,
+  button,
+  summary,
+  label,
+  [role="tab"] {
+    touch-action: manipulation;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-tinta);
+    outline-offset: 3px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: max(16px, 1em);
+  }
+}
+
+@utility px-margem {
+  padding-left: max(1rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1rem, env(safe-area-inset-right, 0px));
+}
+
+/* Botões: preto cheio e branco com borda. Respondem ao toque no :active. */
+@utility botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: var(--radius-botao);
+  border: 1px solid transparent;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  transition:
+    transform 140ms var(--ease-out),
+    background-color 160ms ease,
+    border-color 160ms ease;
+  &:active {
+    transform: scale(0.97);
+  }
+}
+@utility botao-preto {
+  background: var(--color-tinta);
+  color: #fff;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background: var(--color-tinta-hover);
+    }
+  }
+}
+@utility botao-contorno {
+  background: #fff;
+  border-color: var(--color-linha);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      border-color: rgb(10 10 10 / 0.35);
+    }
+  }
+}
+@utility botao-pequeno {
+  min-height: 40px;
+  padding: 0 16px;
+  font-size: 14px;
+}
+
+/* Entrada da capa: uma vez, escalonada por --atraso */
+.entra {
+  animation: entra 420ms var(--ease-out) both;
+  animation-delay: var(--atraso, 0ms);
+}
+@keyframes entra {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+/* A foto da capa assenta devagar (decorativo, uma vez) */
+.assenta {
+  animation: assenta 1200ms var(--ease-out) both;
+}
+@keyframes assenta {
+  from {
+    transform: scale(1.06);
+  }
+}
+
+/* Fileira deslizante: rolagem nativa com encaixe; o próximo cartão aparece pela metade */
+.fileira {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(72%, 290px);
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  /* Primeiro cartão alinhado ao conteúdo (largura máx. 1240px); a fileira vai até a borda da tela */
+  --recuo: max(1rem, env(safe-area-inset-left, 0px), calc((100% - 1240px) / 2 + 1rem));
+  scroll-padding-inline: var(--recuo);
+  padding: 2px var(--recuo) 8px;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.fileira::-webkit-scrollbar {
+  display: none;
+}
+.fileira > * {
+  scroll-snap-align: start;
+}
+
+/* Cartão de tratamento */
+.cartao {
+  transition: transform 220ms var(--ease-out);
+}
+.cartao:active {
+  transform: scale(0.98);
+}
+.cartao img {
+  transition: transform 400ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .cartao:hover {
+    transform: translateY(-4px);
+  }
+  .cartao:hover img {
+    transform: scale(1.03);
+  }
+}
+
+/* Troca de conteúdo (abas): esmaecido + desfoque curto para unir os dois estados */
+.troca {
+  animation: troca 220ms var(--ease-out);
+}
+@keyframes troca {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+    transform: translateY(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entra,
+  .troca {
+    animation: surge 200ms ease-out both;
+  }
+  .assenta {
+    animation: none;
+  }
+  .cartao,
+  .cartao img,
+  .botao {
+    transition-property: opacity, background-color, border-color;
+  }
+}
+@keyframes surge {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Texto dos posts do blog */
+.artigo > * + * {
+  margin-top: 1.1em;
+}
+.artigo h2 {
+  margin-top: 2em;
+  font-size: 1.75rem;
+  line-height: 1.15;
+}
+.artigo ul {
+  list-style: disc;
+  padding-left: 1.25em;
+}
+.artigo li + li {
+  margin-top: 0.4em;
+}

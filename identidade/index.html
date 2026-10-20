@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Identidade — Clínica Esmalte v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Hanken+Grotesk:wght@400;500;600&family=Schibsted+Grotesk:wght@500;700;800&family=Geist:wght@400;500;600&family=Hedvig+Letters+Serif:opsz@12..24&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ===== Tokens de cada identidade (o resto da página é igual nas três) ===== */
+  body[data-id="porcelana"] {
+    --fundo: #eef1f3; --superficie: #ffffff; --tinta: #0f1720; --suave: #56616d; --linha: rgb(15 23 32 / 0.1);
+    --acento: #0e7c66; --acento-tinta: #ffffff; --acento-suave: #d6efe8;
+    --f-titulo: "Newsreader", Georgia, serif; --peso-titulo: 500; --f-texto: "Hanken Grotesk", system-ui, sans-serif;
+    --raio-foto: 22px; --raio-cartao: 18px; --raio-botao: 999px; --espaco-letra: -0.02em;
+    --sombra: 0 1px 2px rgb(15 23 32 / 0.05), 0 18px 40px -24px rgb(15 23 32 / 0.25);
+    --luz: none;
+  }
+  body[data-id="escaner"] {
+    --fundo: #0a0f1e; --superficie: #121a2e; --tinta: #eaf0ff; --suave: #9aa6c3; --linha: rgb(234 240 255 / 0.1);
+    --acento: #7ce7ff; --acento-tinta: #06101f; --acento-suave: rgb(124 231 255 / 0.12);
+    --f-titulo: "Schibsted Grotesk", system-ui, sans-serif; --peso-titulo: 700; --f-texto: "Geist", system-ui, sans-serif;
+    --raio-foto: 16px; --raio-cartao: 14px; --raio-botao: 12px; --espaco-letra: -0.03em;
+    --sombra: 0 0 0 1px rgb(234 240 255 / 0.06), 0 24px 60px -30px rgb(0 0 0 / 0.8);
+    --luz: radial-gradient(60% 50% at 70% 0%, rgb(124 231 255 / 0.18), transparent 70%), radial-gradient(40% 40% at 10% 20%, rgb(139 124 255 / 0.16), transparent 70%);
+  }
+  body[data-id="galeria"] {
+    --fundo: #ffffff; --superficie: #f5f5f4; --tinta: #0a0a0a; --suave: #66666a; --linha: rgb(10 10 10 / 0.1);
+    --acento: #0a0a0a; --acento-tinta: #ffffff; --acento-suave: #f0f0ef;
+    --f-titulo: "Hedvig Letters Serif", Georgia, serif; --peso-titulo: 400; --f-texto: "Onest", system-ui, sans-serif;
+    --raio-foto: 4px; --raio-cartao: 6px; --raio-botao: 4px; --espaco-letra: -0.025em;
+    --sombra: none;
+    --luz: radial-gradient(45% 55% at 85% 10%, rgb(201 216 255 / 0.65), transparent 70%), radial-gradient(35% 45% at 60% 25%, rgb(255 227 211 / 0.6), transparent 70%);
+  }
+
+  /* ===== Base ===== */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
+  body { background: var(--fundo); color: var(--tinta); font-family: var(--f-texto); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; padding-bottom: 96px; }
+  .luz { position: absolute; inset: 0 0 auto 0; height: 900px; background: var(--luz); pointer-events: none; z-index: 0; }
+  .caixa { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left)); }
+  h1, h2, h3 { font-family: var(--f-titulo); font-weight: var(--peso-titulo); letter-spacing: var(--espaco-letra); text-wrap: balance; }
+  p { text-wrap: pretty; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--acento); outline-offset: 3px; }
+
+  .topo { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0; }
+  .marca { font-family: var(--f-titulo); font-weight: var(--peso-titulo); font-size: 22px; letter-spacing: var(--espaco-letra); text-decoration: none; }
+  .menu { display: none; gap: 28px; font-size: 15px; color: var(--suave); }
+  .menu a { text-decoration: none; transition: color 150ms ease; }
+  @media (hover: hover) and (pointer: fine) { .menu a:hover { color: var(--tinta); } }
+  @media (min-width: 860px) { .menu { display: flex; } }
+
+  .botao { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: var(--raio-botao); font: 600 15px/1 var(--f-texto); text-decoration: none; border: 1px solid transparent; cursor: pointer; -webkit-user-select: none; user-select: none; touch-action: manipulation; transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1), background-color 160ms ease, border-color 160ms ease; }
+  .botao:active { transform: scale(0.97); }
+  .botao-principal { background: var(--acento); color: var(--acento-tinta); }
+  .botao-secundario { border-color: var(--linha); color: var(--tinta); background: transparent; }
+  @media (hover: hover) and (pointer: fine) { .botao-secundario:hover { border-color: var(--suave); } .botao-principal:hover { filter: brightness(1.08); } }
+  .botao-pequeno { min-height: 40px; padding: 0 16px; font-size: 14px; }
+
+  .capa { padding: 56px 0 40px; }
+  .capa h1 { font-size: clamp(42px, 7.2vw, 92px); line-height: 1; max-width: 13ch; }
+  .capa p { margin-top: 22px; max-width: 46ch; font-size: 19px; color: var(--suave); }
+  .acoes { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .foto-capa { margin-top: 44px; width: 100%; aspect-ratio: 16 / 7; object-fit: cover; border-radius: var(--raio-foto); display: block; box-shadow: var(--sombra); }
+  @media (max-width: 640px) { .foto-capa { aspect-ratio: 4 / 3; } }
+
+  .secao { padding: 72px 0 0; }
+  .secao h2 { font-size: clamp(30px, 4vw, 46px); line-height: 1.05; }
+  .secao .sub { margin-top: 10px; color: var(--suave); max-width: 52ch; }
+
+  /* Fileira deslizante (rolagem nativa + encaixe) */
+  .fileira { margin-top: 28px; display: grid; grid-auto-flow: column; grid-auto-columns: min(78%, 300px); gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: max(16px, env(safe-area-inset-left)); padding: 4px max(16px, env(safe-area-inset-left)) 20px; margin-inline: calc(-1 * max(16px, env(safe-area-inset-left))); scrollbar-width: none; overscroll-behavior-x: contain; }
+  .fileira::-webkit-scrollbar { display: none; }
+  .cartao { scroll-snap-align: start; background: var(--superficie); border-radius: var(--raio-cartao); overflow: hidden; box-shadow: var(--sombra); text-decoration: none; color: inherit; display: block; transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1); border: 1px solid var(--linha); }
+  .cartao:active { transform: scale(0.98); }
+  @media (hover: hover) and (pointer: fine) { .cartao:hover { transform: translateY(-3px); } }
+  .cartao img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+  .cartao div { padding: 16px 18px 18px; }
+  .cartao .problema { font-family: var(--f-titulo); font-weight: var(--peso-titulo); font-size: 24px; line-height: 1.15; letter-spacing: var(--espaco-letra); }
+  .cartao .tratamento { margin-top: 4px; font-size: 15px; color: var(--suave); }
+
+  /* Abas com indicador deslizante */
+  .abas { margin-top: 28px; position: relative; display: inline-flex; gap: 4px; padding: 4px; border-radius: calc(var(--raio-botao) + 4px); background: var(--superficie); border: 1px solid var(--linha); max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+  .aba { position: relative; z-index: 1; border: 0; background: none; color: var(--suave); font: 500 15px/1 var(--f-texto); padding: 12px 16px; border-radius: var(--raio-botao); cursor: pointer; white-space: nowrap; transition: color 160ms ease; touch-action: manipulation; }
+  .aba[aria-selected="true"] { color: var(--acento-tinta); }
+  .indicador { position: absolute; top: 4px; left: 0; height: calc(100% - 8px); border-radius: var(--raio-botao); background: var(--acento); transition: transform 260ms cubic-bezier(0.23, 1, 0.32, 1), width 260ms cubic-bezier(0.23, 1, 0.32, 1); }
+  .painel { margin-top: 28px; display: grid; gap: 28px; align-items: center; }
+  @media (min-width: 860px) { .painel { grid-template-columns: 1fr 1fr; } }
+  .painel h3 { font-size: 30px; line-height: 1.1; }
+  .comparar { margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .comparar div { padding: 14px 16px; border-radius: var(--raio-cartao); border: 1px solid var(--linha); }
+  .comparar .aqui { background: var(--acento-suave); border-color: transparent; }
+  .comparar strong { display: block; font-size: 13px; color: var(--suave); font-weight: 600; }
+  .painel img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--raio-foto); display: block; }
+  .troca { animation: troca 220ms cubic-bezier(0.23, 1, 0.32, 1); }
+  @keyframes troca { from { opacity: 0; transform: translateY(6px); filter: blur(2px); } }
+
+  /* Ficha técnica da identidade */
+  .ficha { margin-top: 80px; padding: 28px 0; border-top: 1px solid var(--linha); display: grid; gap: 24px; }
+  @media (min-width: 860px) { .ficha { grid-template-columns: 1.2fr 1fr; } }
+  .cores { display: flex; flex-wrap: wrap; gap: 10px; }
+  .cor { width: 92px; font-size: 12px; color: var(--suave); }
+  .cor span { display: block; height: 56px; border-radius: 10px; border: 1px solid var(--linha); margin-bottom: 6px; }
+  .fontes p { color: var(--suave); font-size: 15px; }
+  .fontes .amostra { font-family: var(--f-titulo); font-weight: var(--peso-titulo); font-size: 34px; color: var(--tinta); line-height: 1.1; letter-spacing: var(--espaco-letra); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .indicador, .cartao, .botao { transition: none; }
+    .troca { animation: surge 200ms ease-out; }
+    @keyframes surge { from { opacity: 0; } }
+  }
+
+  /* ===== Seletor (skill prototype — PICKER.md, sem alterações) ===== */
+  .proto-picker { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 2147483647; display: flex; align-items: center; gap: 2px; padding: 4px; border-radius: 999px; background: rgba(10, 10, 10, 0.82); -webkit-backdrop-filter: blur(12px) saturate(1.4); backdrop-filter: blur(12px) saturate(1.4); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset, 0 8px 24px rgba(0, 0, 0, 0.24), 0 2px 6px rgba(0, 0, 0, 0.12); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 13px; line-height: 1; -webkit-font-smoothing: antialiased; user-select: none; -webkit-user-select: none; }
+  .proto-picker-highlight { position: absolute; top: 4px; left: 0; height: 28px; border-radius: 999px; background: rgba(255, 255, 255, 0.12); will-change: transform; }
+  .proto-picker[data-ready] .proto-picker-highlight { transition: transform 250ms cubic-bezier(0.23, 1, 0.32, 1), width 250ms cubic-bezier(0.23, 1, 0.32, 1); }
+  @media (prefers-reduced-motion: reduce) { .proto-picker[data-ready] .proto-picker-highlight { transition: none; } }
+  .proto-picker-item { position: relative; display: flex; align-items: center; height: 28px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; color: rgba(255, 255, 255, 0.55); font: inherit; cursor: pointer; transition: color 150ms ease-out; }
+  .proto-picker-item:hover { color: rgba(255, 255, 255, 0.85); }
+  .proto-picker-item:active { transform: scale(0.97); }
+  .proto-picker-item:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.4); outline-offset: 2px; }
+  .proto-picker-item[data-active] { color: #fff; }
+</style>
+</head>
+<body data-id="porcelana">
+<div class="luz" aria-hidden="true"></div>
+
+<div class="caixa">
+  <header class="topo">
+    <a class="marca" href="#">Esmalte</a>
+    <nav class="menu" aria-label="Principal"><a href="#">Tratamentos</a><a href="#">A clínica</a><a href="#">Contato</a><a href="#">Blog</a></nav>
+    <a class="botao botao-principal botao-pequeno" href="#">Agendar</a>
+  </header>
+
+  <section class="capa">
+    <h1>Tratamento que você vê antes de começar.</h1>
+    <p>Escaneamento 3D no lugar da massa, planejamento na tela e coroa pronta na mesma consulta. No centro de Santa Maria.</p>
+    <div class="acoes">
+      <a class="botao botao-principal" href="#">Agendar avaliação</a>
+      <a class="botao botao-secundario" href="#">Como funciona</a>
+    </div>
+    <img class="foto-capa" src="img/consulta.jpg" alt="Dentista conversando com uma paciente na cadeira do consultório">
+  </section>
+
+  <section class="secao">
+    <h2>O que você quer resolver?</h2>
+    <p class="sub">Arraste para o lado. Cada cartão abre o tratamento.</p>
+    <div class="fileira">
+      <a class="cartao" href="#"><img src="img/implante.jpg" alt=""><div><p class="problema">Dente perdido</p><p class="tratamento">Implante guiado</p></div></a>
+      <a class="cartao" href="#"><img src="img/clareamento.jpg" alt=""><div><p class="problema">Sorriso mais branco</p><p class="tratamento">Clareamento</p></div></a>
+      <a class="cartao" href="#"><img src="img/ortodontia.jpg" alt=""><div><p class="problema">Dentes tortos</p><p class="tratamento">Alinhadores</p></div></a>
+      <a class="cartao" href="#"><img src="img/criancas.jpg" alt=""><div><p class="problema">Para meu filho</p><p class="tratamento">Odontopediatria</p></div></a>
+      <a class="cartao" href="#"><img src="img/consultorio.jpg" alt=""><div><p class="problema">Revisão</p><p class="tratamento">Limpeza e prevenção</p></div></a>
+    </div>
+  </section>
+
+  <section class="secao">
+    <h2>O que a tecnologia muda para você</h2>
+    <div class="abas" role="tablist" aria-label="Tecnologias">
+      <span class="indicador" aria-hidden="true"></span>
+      <button class="aba" role="tab" aria-selected="true">Escaneamento 3D</button>
+      <button class="aba" role="tab" aria-selected="false" tabindex="-1">Planejamento digital</button>
+      <button class="aba" role="tab" aria-selected="false" tabindex="-1">Implante guiado</button>
+      <button class="aba" role="tab" aria-selected="false" tabindex="-1">Coroa em 1 sessão</button>
+    </div>
+    <div class="painel" id="painel" role="tabpanel"></div>
+  </section>
+
+  <section class="ficha" aria-label="Ficha da identidade">
+    <div>
+      <p style="font-weight:600;margin-bottom:12px" id="nome-id"></p>
+      <div class="cores" id="cores"></div>
+    </div>
+    <div class="fontes" id="fontes"></div>
+  </section>
+</div>
+
+<nav class="proto-picker" aria-label="Prototype variants">
+  <span class="proto-picker-highlight" aria-hidden="true"></span>
+  <button class="proto-picker-item" data-active aria-current="true">Porcelana</button>
+  <button class="proto-picker-item">Escâner</button>
+  <button class="proto-picker-item">Galeria</button>
+</nav>
+
+<script>
+  const identidades = [
+    { id: "porcelana", nome: "Porcelana — claro e calmo, serifa elegante, verde-esmeralda",
+      cores: [["Fundo", "#eef1f3"], ["Superfície", "#ffffff"], ["Tinta", "#0f1720"], ["Texto suave", "#56616d"], ["Ação", "#0e7c66"], ["Destaque", "#d6efe8"]],
+      fontes: ["Newsreader (títulos)", "Hanken Grotesk (texto)"], botoes: "Botões em pílula, cantos bem arredondados, sombra suave." },
+    { id: "escaner", nome: "Escâner — escuro e tecnológico, luz ciano, grotesca forte",
+      cores: [["Fundo", "#0a0f1e"], ["Superfície", "#121a2e"], ["Tinta", "#eaf0ff"], ["Texto suave", "#9aa6c3"], ["Ação", "#7ce7ff"], ["Luz", "#8b7cff"]],
+      fontes: ["Schibsted Grotesk (títulos)", "Geist (texto)"], botoes: "Botões com canto médio (12px), brilho de fundo como iluminação." },
+    { id: "galeria", nome: "Galeria — branco absoluto, editorial, preto e luz suave",
+      cores: [["Fundo", "#ffffff"], ["Superfície", "#f5f5f4"], ["Tinta", "#0a0a0a"], ["Texto suave", "#66666a"], ["Ação", "#0a0a0a"], ["Luz", "#c9d8ff"]],
+      fontes: ["Hedvig Letters Serif (títulos)", "Onest (texto)"], botoes: "Botões retos (4px), sem sombra, fotos com canto quase reto." },
+  ];
+
+  const paineis = [
+    { t: "Sem massa na boca", b: "Um scanner do tamanho de uma escova copia seus dentes em 3D em cerca de 2 minutos.", era: "Moldeira com massa, ânsia e gosto ruim", aqui: "Imagem 3D na tela, em 2 minutos", img: "img/consultorio.jpg" },
+    { t: "Você vê o resultado antes", b: "O sorriso planejado aparece na tela, e ajustamos junto com você antes de começar.", era: "Imaginar como vai ficar", aqui: "Ver e aprovar o plano na tela", img: "img/consulta.jpg" },
+    { t: "Cirurgia planejada em 3D", b: "A posição de cada implante é definida no computador a partir da tomografia.", era: "Decisões durante a cirurgia", aqui: "Guia feito sob medida, menos invasivo", img: "img/implante.jpg" },
+    { t: "Coroa pronta na mesma consulta", b: "A peça é desenhada e fresada aqui na clínica enquanto você espera.", era: "Provisório e nova consulta", aqui: "Uma sessão, sem provisório", img: "img/clareamento.jpg" },
+  ];
+
+  // Abas: indicador desliza; setas do teclado trocam
+  const abas = [...document.querySelectorAll(".aba")];
+  const indicador = document.querySelector(".indicador");
+  const painel = document.getElementById("painel");
+  let abaAtual = 0;
+  function moverIndicador() {
+    const el = abas[abaAtual];
+    indicador.style.width = el.offsetWidth + "px";
+    indicador.style.transform = `translateX(${el.offsetLeft - 4}px)`;
+  }
+  function mostrarAba(i, focar) {
+    abaAtual = i;
+    abas.forEach((a, j) => { a.setAttribute("aria-selected", j === i); a.tabIndex = j === i ? 0 : -1; });
+    if (focar) abas[i].focus();
+    moverIndicador();
+    const p = paineis[i];
+    painel.innerHTML = `<div class="troca"><h3>${p.t}</h3><p class="sub">${p.b}</p><div class="comparar"><div><strong>Como era</strong>${p.era}</div><div class="aqui"><strong>Como é aqui</strong>${p.aqui}</div></div></div><img class="troca" src="${p.img}" alt="">`;
+  }
+  abas.forEach((a, i) => {
+    a.addEventListener("click", () => mostrarAba(i));
+    a.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") { e.preventDefault(); mostrarAba((i + 1) % abas.length, true); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); mostrarAba((i - 1 + abas.length) % abas.length, true); }
+    });
+  });
+
+  // Ficha da identidade
+  function preencherFicha(idx) {
+    const d = identidades[idx];
+    document.getElementById("nome-id").textContent = d.nome;
+    document.getElementById("cores").innerHTML = d.cores.map(([n, c]) => `<div class="cor"><span style="background:${c}"></span>${n}<br>${c}</div>`).join("");
+    document.getElementById("fontes").innerHTML = `<p class="amostra">Aa — Esmalte</p><p>${d.fontes.join(" · ")}</p><p style="margin-top:8px">${d.botoes}</p>`;
+  }
+
+  // Seletor (comportamento do PICKER.md)
+  const picker = document.querySelector(".proto-picker");
+  const highlight = picker.querySelector(".proto-picker-highlight");
+  const items = [...picker.querySelectorAll(".proto-picker-item")];
+  let current = 0;
+  function moveHighlight() { const el = items[current]; highlight.style.width = el.offsetWidth + "px"; highlight.style.transform = `translateX(${el.offsetLeft}px)`; }
+  function setActive(i) {
+    if (i < 0 || i >= identidades.length) return;
+    current = i;
+    items.forEach((el, j) => { el.toggleAttribute("data-active", j === i); if (j === i) el.setAttribute("aria-current", "true"); else el.removeAttribute("aria-current"); });
+    moveHighlight();
+    const url = new URL(location); url.searchParams.set("v", i + 1); history.replaceState(null, "", url);
+    document.body.dataset.id = identidades[i].id;   // troca instantânea, sem animação
+    preencherFicha(i);
+    document.fonts.ready.then(moverIndicador);
+    moverIndicador();
+  }
+  items.forEach((el, i) => el.addEventListener("click", () => setActive(i)));
+  window.addEventListener("resize", () => { moveHighlight(); moverIndicador(); });
+  document.addEventListener("keydown", (e) => {
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable) return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.target.classList?.contains("aba")) return;
+    const num = parseInt(e.key, 10);
+    if (num >= 1 && num <= identidades.length) setActive(num - 1);
+    else if (e.key === "ArrowRight") setActive((current + 1) % identidades.length);
+    else if (e.key === "ArrowLeft") setActive((current - 1 + identidades.length) % identidades.length);
+  });
+  mostrarAba(0);
+  setActive((parseInt(new URLSearchParams(location.search).get("v"), 10) || 1) - 1);
+  requestAnimationFrame(() => requestAnimationFrame(() => picker.setAttribute("data-ready", "")));
+</script>
+</body>
+</html>
