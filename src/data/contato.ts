@@ -8,6 +8,7 @@ export type EstadoContato = {
   mensagem?: string;
   valores?: Partial<Record<Campo, string>>;
   demonstracao?: boolean;
+  bloqueado?: boolean; // o firewall barrou o envio (muitas tentativas seguidas)
 };
 
 export const assuntos = ["Agendar uma avaliação", "Dúvida sobre tratamento", "Convênio ou pagamento", "Outro assunto"];

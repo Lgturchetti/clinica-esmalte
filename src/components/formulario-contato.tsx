@@ -2,15 +2,34 @@
 
 import { useActionState, useEffect, useRef } from "react";
 import { enviarContato } from "@/app/contato/actions";
+import { agendar } from "@/data/clinica";
 import { assuntos, type Campo, type EstadoContato } from "@/data/contato";
 
 const inicial: EstadoContato = { status: "inicial" };
+
+const campos: Campo[] = ["nome", "telefone", "email", "assunto", "mensagem"];
+
+// Chama a ação do servidor; se a resposta não vier (limite do firewall da Vercel: 429, ou sem
+// internet), mostra um aviso no próprio formulário em vez da página de erro, mantendo o que foi digitado.
+async function enviarComAviso(anterior: EstadoContato, formData: FormData): Promise<EstadoContato> {
+  try {
+    return await enviarContato(anterior, formData);
+  } catch {
+    const valores = Object.fromEntries(campos.map((c) => [c, String(formData.get(c) ?? "")]));
+    return {
+      status: "erro",
+      bloqueado: true,
+      valores,
+      mensagem: "Muitas tentativas seguidas. Aguarde um minuto e tente de novo, ou chame no WhatsApp.",
+    };
+  }
+}
 
 const estiloCampo =
   "mt-1.5 block w-full rounded-botao border border-linha bg-white px-4 py-3 text-tinta transition-colors duration-150 placeholder:text-suave/60 hover:border-tinta/30 focus:border-tinta focus:outline-none focus:ring-2 focus:ring-tinta/10 aria-[invalid=true]:border-red-700";
 
 export function FormularioContato() {
-  const [estado, enviar, enviando] = useActionState(enviarContato, inicial);
+  const [estado, enviar, enviando] = useActionState(enviarComAviso, inicial);
   const inicio = useRef<HTMLInputElement>(null);
   const aviso = useRef<HTMLDivElement>(null);
 
@@ -64,6 +83,11 @@ export function FormularioContato() {
       {estado.status === "erro" && (
         <div ref={aviso} tabIndex={-1} role="alert" className="rounded-cartao border border-red-800/30 bg-red-50 p-4 text-red-900 sm:col-span-2">
           {estado.mensagem}
+          {estado.bloqueado && (
+            <a href={agendar} className="botao botao-preto botao-pequeno mt-3 flex w-fit">
+              Chamar no WhatsApp
+            </a>
+          )}
         </div>
       )}
 
