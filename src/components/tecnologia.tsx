@@ -30,7 +30,7 @@ export function Tecnologia() {
       </div>
 
       {tecnologias.map((t) => (
-        <Tabs.Panel key={t.id} value={t.id} className="mx-auto mt-8 max-w-[1240px] px-margem outline-none">
+        <Tabs.Panel key={t.id} value={t.id} className="mx-auto mt-8 max-w-[1240px] rounded-botao px-margem focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-tinta">
           <Painel t={t} />
         </Tabs.Panel>
       ))}

@@ -3,6 +3,8 @@ import { clinica, type Tratamento, linkWhatsApp } from "@/data/clinica";
 
 // Conteúdo do detalhe: o mesmo na janela por cima e na página inteira.
 export function DetalheTratamento({ t, Titulo = "h1" }: { t: Tratamento; Titulo?: "h1" | "h2" }) {
+  // Subtítulos um nível abaixo do título (h1 → h2 na página inteira; h2 → h3 na janela)
+  const Sub = Titulo === "h1" ? "h2" : "h3";
   return (
     <article>
       <Image
@@ -20,7 +22,7 @@ export function DetalheTratamento({ t, Titulo = "h1" }: { t: Tratamento; Titulo?
 
         <div className="mt-8 grid gap-8 border-t border-linha pt-6 md:grid-cols-2">
           <div>
-            <h3 className="font-sans text-[15px] font-semibold tracking-normal">Como funciona</h3>
+            <Sub className="font-sans text-[15px] font-semibold tracking-normal">Como funciona</Sub>
             <ol className="mt-2 space-y-1.5 text-suave">
               {t.etapas.map((e, i) => (
                 <li key={e} className="flex gap-3">

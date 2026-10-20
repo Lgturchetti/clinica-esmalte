@@ -28,7 +28,7 @@ export default function Tratamentos() {
       {/* Celular: uma fileira deslizante por categoria (como no streaming) */}
       <div className="space-y-14 pb-24 lg:hidden">
         {fileiras.map((c) => (
-          <section key={c.id} aria-labelledby={`cat-${c.id}`}>
+          <section key={c.id}>
             <Fileira
               rotulo={c.nome}
               titulo={
