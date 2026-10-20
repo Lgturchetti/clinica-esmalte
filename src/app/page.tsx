@@ -14,7 +14,7 @@ export default function Inicio() {
     <>
       {/* 1. CAPA "Cinema": foto do consultório de ponta a ponta, passando por baixo do cabeçalho */}
       <section data-capa className="relative -mt-16 flex min-h-[max(560px,min(88svh,860px))] flex-col justify-end overflow-hidden pb-[150px] pt-28 sm:pb-[170px]">
-        <Image src={fotoCapa.src} alt={fotoCapa.alt} preload placeholder="blur" sizes="100vw" className="assenta absolute inset-0 h-full w-full object-cover" />
+        <Image src={fotoCapa.src} alt={fotoCapa.alt} preload sizes="100vw" className="assenta absolute inset-0 h-full w-full object-cover" />
         {/* Véu branco à esquerda e embaixo: o texto fica legível e a fileira sobe por cima */}
         <div
           className="absolute inset-0"
@@ -88,7 +88,6 @@ export default function Inicio() {
               <Image
                 src={p.foto.src}
                 alt={p.foto.alt}
-                placeholder="blur"
                 sizes="(min-width: 640px) 380px, 104px"
                 className="aspect-[4/5] w-full rounded-botao object-cover"
               />

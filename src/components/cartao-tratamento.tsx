@@ -11,7 +11,6 @@ export function CartaoTratamento({ t, prioridade, categoria }: { t: Tratamento; 
         <Image
           src={t.foto.src}
           alt=""
-          placeholder="blur"
           preload={prioridade}
           sizes="(min-width: 768px) 290px, 72vw"
           className="h-full w-full object-cover"
