@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { type Tratamento, linkWhatsApp } from "@/data/clinica";
+import { clinica, type Tratamento, linkWhatsApp } from "@/data/clinica";
 
 // Conteúdo do detalhe: o mesmo na janela por cima e na página inteira.
 export function DetalheTratamento({ t, Titulo = "h1" }: { t: Tratamento; Titulo?: "h1" | "h2" }) {
@@ -48,7 +48,7 @@ export function DetalheTratamento({ t, Titulo = "h1" }: { t: Tratamento; Titulo?
           </dl>
         </div>
 
-        <a href={linkWhatsApp(`Olá! Quero saber mais sobre ${t.nome.toLowerCase()} na Clínica Esmalte.`)} className="botao botao-preto mt-8 w-full sm:w-auto">
+        <a href={linkWhatsApp(`Olá! Quero saber mais sobre ${t.nome.toLowerCase()} na ${clinica.nome}.`)} className="botao botao-preto mt-8 w-full sm:w-auto">
           Perguntar no WhatsApp
         </a>
       </div>
