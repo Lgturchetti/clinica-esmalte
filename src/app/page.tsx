@@ -145,7 +145,7 @@ export default function Inicio() {
               </div>
               <div>
                 <dt className="font-semibold">Convênios</dt>
-                <dd className="mt-1 text-suave">{convenios.join(", ")}.</dd>
+                <dd className="mt-1 text-pretty text-suave">{convenios.join(", ")}.</dd>
               </div>
             </dl>
           </div>

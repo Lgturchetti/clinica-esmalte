@@ -39,7 +39,7 @@ export function Cabecalho() {
               key={p.href}
               href={p.href}
               aria-current={ativo(pathname, p.href) ? "page" : undefined}
-              className="text-suave transition-colors duration-150 hover:text-tinta aria-[current=page]:text-tinta"
+              className="text-tinta/80 transition-colors duration-150 hover:text-tinta aria-[current=page]:text-tinta [[data-rolou]_&]:text-suave [[data-rolou]_&]:hover:text-tinta [[data-rolou]_&]:aria-[current=page]:text-tinta"
             >
               {p.nome}
             </Link>

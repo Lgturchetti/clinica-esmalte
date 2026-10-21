@@ -26,7 +26,7 @@ async function enviarComAviso(anterior: EstadoContato, formData: FormData): Prom
 }
 
 const estiloCampo =
-  "mt-1.5 block w-full rounded-botao border border-linha bg-white px-4 py-3 text-tinta transition-colors duration-150 placeholder:text-suave/60 hover:border-tinta/30 focus:border-tinta focus:outline-none focus:ring-2 focus:ring-tinta/10 aria-[invalid=true]:border-red-700";
+  "mt-1.5 block w-full rounded-botao border border-linha bg-white px-4 py-3 text-tinta transition-colors duration-150 placeholder:text-suave hover:border-tinta/30 focus:border-tinta focus:outline-none focus:ring-2 focus:ring-tinta/10 aria-[invalid=true]:border-red-700";
 
 export function FormularioContato() {
   const [estado, enviar, enviando] = useActionState(enviarComAviso, inicial);
