@@ -39,7 +39,8 @@ export function FormularioContato() {
   // resposta porque o React limpa os campos do formulário depois de cada envio.
   useEffect(() => {
     if (!abertoEm.current) abertoEm.current = Date.now();
-    if (inicio.current) inicio.current.value = String(abertoEm.current);
+    // defaultValue também: o React limpa o formulário depois de cada envio e a limpeza voltava o horário a 0
+    if (inicio.current) inicio.current.defaultValue = inicio.current.value = String(abertoEm.current);
     // Erro: foco no primeiro campo errado (o aviso no topo é lido por ser role="alert").
     // Sucesso: foco na mensagem de enviado.
     if (estado.status === "erro") {
@@ -127,11 +128,7 @@ export function FormularioContato() {
         {mensagemErro("mensagem")}
       </div>
 
-      {/* Armadilhas contra robôs: invisíveis para pessoas */}
-      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
-        <label htmlFor="site">Não preencha este campo</label>
-        <input id="site" name="site" type="text" tabIndex={-1} autoComplete="off" />
-      </div>
+      {/* Contra robôs: só o tempo mínimo (campo-armadilha era preenchido pelo preenchimento automático do navegador) */}
       <input ref={inicio} type="hidden" name="inicio" defaultValue="0" />
 
       <div className="flex flex-col gap-4 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">

@@ -6,8 +6,7 @@
 
 import { assuntos, type Campo, type EstadoContato } from "@/data/contato";
 
-const TEMPO_MINIMO_MS = 3000; // robôs enviam em menos de 3 segundos
-const TEMPO_MAXIMO_MS = 24 * 60 * 60 * 1000; // marcador velho ou falso
+const TEMPO_MINIMO_MS = 1200; // robôs enviam em milissegundos; preenchimento automático + clique leva ~2 s
 
 function texto(formData: FormData, campo: string, max: number) {
   const valor = formData.get(campo);
@@ -15,12 +14,13 @@ function texto(formData: FormData, campo: string, max: number) {
 }
 
 export async function enviarContato(_anterior: EstadoContato, formData: FormData): Promise<EstadoContato> {
-  // Armadilhas contra spam: campo escondido preenchido ou envio rápido demais.
-  // Responde como se tivesse dado certo, para o robô não tentar de novo.
-  const armadilha = texto(formData, "site", 200);
+  // Contra spam: só envio rápido demais. Responde como se tivesse dado certo, para o robô não tentar de novo.
+  // Sem horário válido a mensagem passa: melhor um robô a mais que um paciente perdido.
+  // (Antes havia campo-armadilha "site" e limite de 3 s: o preenchimento automático do navegador era barrado.)
   const inicio = Number(formData.get("inicio"));
   const decorrido = Date.now() - inicio;
-  if (armadilha || !Number.isFinite(inicio) || decorrido < TEMPO_MINIMO_MS || decorrido > TEMPO_MAXIMO_MS) {
+  if (inicio > 0 && decorrido < TEMPO_MINIMO_MS) {
+    console.warn("contato barrado: rápido demais", decorrido, "ms");
     return { status: "enviado" };
   }
 
